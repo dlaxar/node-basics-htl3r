@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat</title>
+	<script 
+		type="text/javascript"
+		src="http://localhost:8000/socket.io/socket.io.js"
+		>
+	</script>
+	<script type="text/javascript">
+		var socket = io.connect('http://localhost:8000');
+		socket.on('newMessage', function(data) {
+			document.getElementById('log').innerHTML += '<p>' + data + '</p>';
+		})
+	</script>
+</head>
+<body>
+
+<h1>Chatserver</h1>
+
+<div id="log">
+	
+</div>
+
+Hier eigene Nachricht: 
+<input id="input" type="text"></input>
+<button id="send">Senden...</button>
+</body>
+<script type="text/javascript">
+	document.getElementById('send').onclick = function() {
+		var text = document.getElementById('input').value;
+		socket.emit('message', text);
+
+		document.getElementById('input').value = '';
+	}
+</script>
+</html>

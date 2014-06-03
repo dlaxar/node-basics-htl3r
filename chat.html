@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat</title>
+</head>
+<script 
+	type="text/javascript" 
+	src="http://localhost:8000/socket.io/socket.io.js">
+</script>
+<script type="text/javascript">
+	var socket = io.connect('http://localhost:8000');
+	socket.on('newMessage', function onData(data) {
+		document.getElementById('log').innerHTML += '<p>' + data + '</p>';
+	});
+</script>
+<body>
+
+Hier kommen die Nachrichten rein
+<div id="log" background="#eee">
+	
+</div>
+
+Sende eine Nachricht
+<input id="input" type="text"></input>
+<button id="send">Senden!</button>
+
+<script type="text/javascript">
+	document.getElementById('send').onclick = function() {
+		var text = document.getElementById('input').value;
+		socket.emit('message', text);
+
+		document.getElementById('input').value = '';
+	};
+</script>
+
+</body>
+</html>
